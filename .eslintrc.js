@@ -2,7 +2,6 @@ module.exports = {
   plugins: ['node'],
   extends: [
     'prettier',
-    'prettier/react',
     'prettier/standard',
     'eslint:recommended',
     'plugin:node/recommended'
@@ -15,4 +14,4 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018
   }
-}
+};

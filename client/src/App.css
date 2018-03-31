@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Scope+One');
+@import url('https://fonts.googleapis.com/css?family=Rock+Salt');
+
+/* GLOBAL CSS SIMPLE RESET */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  text-align: center;
+  font-family: 'Scope One', serif;
+}
