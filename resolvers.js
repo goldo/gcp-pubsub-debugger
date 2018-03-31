@@ -3,44 +3,79 @@ const async = require('async')
 const gcpPubsub = require('./gcp-pubsub')
 const graphqlPubSub = require('./graphql-pubsub')
 
-const projectId = process.env.GCP_PROJECT_ID
+// Where the messages from all the topics are stored
+// (until the server reboots...)
+const messages = {}
+
+const addMessageToTopic = (message, topicName) => {
+  if (!messages[topicName]) messages[topicName] = []
+  messages[topicName].push(message)
+}
+const getSubscriptionName = topicName => `${topicName}-debugger`
+const getTopicNameFromFullTopicName = name => name.split('/').pop()
 
 const returnContent = ([content]) => content
 
 const getTopics = async () => gcpPubsub.getTopics().then(returnContent)
+const getMessages = topicName => messages[topicName] || []
 
-const subscribeToAllTopics = () => {
-  console.log('subscribing to all topics..')
+const getOrCreateAllSubscriptions = () => {
   return util.promisify(async.auto)({
     topics: getTopics,
-    subscribe: ['topics', subscribeToTopics]
+    subscriptions: ['topics', getOrCreateSubscriptions]
   })
 }
 
-const subscribeToTopics = async ({ topics }) =>
+const getOrCreateSubscriptions = async ({ topics }) =>
   util.promisify(async.map)(topics, async topic => {
-    const topicName = topic.name.split('/').pop()
-    const subscriptionName = `${topicName}-debugger`
-    console.log(
-      `\n=> Subscribing to topic "${topicName}" with subscription "${subscriptionName}"`
-    )
+    const topicName = getTopicNameFromFullTopicName(topic.name)
+    const subscriptionName = getSubscriptionName(topicName)
+    const subscription = topic.subscription(subscriptionName)
 
-    return gcpPubsub
-      .topic(topicName)
-      .createSubscription(
-        `projects/${projectId}/subscriptions/${subscriptionName}`
-      )
-      .then(([subscription]) => {
-        subscription.on('error', console.log)
-        subscription.on('message', message => {
-          console.log(message)
-          graphqlPubSub.publish('message', {
-            message: { ...message, topic: topicName }
-          })
-        })
-        return subscription
+    return subscription
+      .exists()
+      .then(([exists]) => {
+        if (exists) return subscription
+        return topic.createSubscription(subscriptionName).then(returnContent)
       })
+      .then(() => subscribeToTopic(topicName))
+      .then(() => subscription)
   })
 
+const subscribeToTopic = topicName => {
+  console.log(`getting messages on topic "${topicName}"`)
+  const topic = gcpPubsub.topic(topicName)
+  const subscription = topic.subscription(getSubscriptionName(topicName))
+  subscription.on('error', console.log)
+  subscription.on('message', message => onMessageFromTopic(message, topic))
+}
+
+const onMessageFromTopic = (msg, topic) => {
+  msg.ack()
+  let data
+  const dataString = msg.data.toString()
+
+  const topicName = getTopicNameFromFullTopicName(topic.name)
+
+  try {
+    data = JSON.parse(dataString)
+  } catch (error) {
+    data = dataString
+  }
+
+  const message = {
+    ...msg,
+    data,
+    topic: {
+      name: topicName
+    }
+  }
+
+  addMessageToTopic(message, topicName)
+
+  graphqlPubSub.publish('message', { message })
+}
+
 module.exports.getTopics = getTopics
-module.exports.subscribeToAllTopics = subscribeToAllTopics
+module.exports.getMessages = getMessages
+module.exports.getOrCreateAllSubscriptions = getOrCreateAllSubscriptions
