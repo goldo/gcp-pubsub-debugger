@@ -1,0 +1,27 @@
+{
+  "name": "gcp-pubsub-debugger",
+  "version": "0.0.1",
+  "description": "Tool for debugging Google Cloud Platform PubSub",
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Franck Achkouyan <https://twitter.com/a_franck>",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "4.19.1",
+    "eslint-config-prettier": "2.9.0",
+    "eslint-plugin-node": "6.0.1"
+  },
+  "dependencies": {
+    "@google-cloud/pubsub": "0.18.0",
+    "async": "2.6.0",
+    "dotenv": "5.0.1",
+    "graphql-type-json": "0.2.0",
+    "graphql-yoga": "1.7.0"
+  }
+}

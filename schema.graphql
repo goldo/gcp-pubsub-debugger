@@ -1,0 +1,23 @@
+scalar JSON
+
+type Query {
+  topics: [Topic!]!
+}
+
+type Subscription {
+  message(topicName: String): Message!
+}
+
+type Topic {
+  name: String!
+}
+
+type Message {
+  connectionId: String!
+  ackId: String!
+  id: String!
+  attributes: JSON!
+  publishTime: String!
+  received: String!
+  data: JSON!
+}
