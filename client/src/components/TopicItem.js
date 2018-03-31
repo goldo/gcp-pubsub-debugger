@@ -2,20 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 //import { TopicItemContent } from './TopicItemContent';
 
-const Item = styled.li`
+const TopicItemSubject = styled.li`
   display: flex;
-  font-style: italic;
   justify-content: center;
-`;
-
-const TopicItemSubject = styled.p`
-  font-size: 18px;
+  background-color: ${props => {
+    if (props.index % 2 === 0) return '#edf5fc';
+    return '#f8f4e3';
+  }};
+  font-size: 1.2em;
   font-weight: bold;
+  padding: 8px 0;
+  border: 2px solid #ffffff;
 `;
 
-export const TopicItem = props => (
-  <Item>
-    <TopicItemSubject>{props.name}</TopicItemSubject>
-    {/*<TopicItemContent />*/}
-  </Item>
+export const TopicItem = ({ index, name }) => (
+  <TopicItemSubject index={index}>{name}</TopicItemSubject>
 );
