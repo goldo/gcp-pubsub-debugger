@@ -2,10 +2,11 @@ scalar JSON
 
 type Query {
   topics: [Topic!]!
+  messages(topicName: String!): [Message!]!
 }
 
 type Subscription {
-  message(topicName: String): Message!
+  message(topicName: String!): Message!
 }
 
 type Topic {
@@ -20,4 +21,5 @@ type Message {
   publishTime: String!
   received: String!
   data: JSON!
+  topic: Topic!
 }
