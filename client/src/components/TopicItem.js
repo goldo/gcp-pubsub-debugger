@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-//import { TopicItemContent } from './TopicItemContent';
 
 const TopicItemSubject = styled.li`
   display: flex;

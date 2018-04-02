@@ -6,6 +6,4 @@ const Content = styled.p`
   font-size: 1.2em;
 `;
 
-export const TopicItemContent = ({ content = 'Topic Item Content' }) => (
-  <Content>{content}</Content>
-);
+export const TopicItemContent = ({ content }) => <Content>{content}</Content>;
