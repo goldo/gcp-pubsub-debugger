@@ -7,6 +7,13 @@
   padding: 0;
 }
 
+*:link,
+:hover,
+:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
 .App {
   text-align: center;
   font-family: 'Scope One', serif;

@@ -9,7 +9,7 @@ const messages = {}
 
 const addMessageToTopic = (message, topicName) => {
   if (!messages[topicName]) messages[topicName] = []
-  messages[topicName].push(message)
+  messages[topicName].unshift(message)
 }
 const getSubscriptionName = topicName => `${topicName}-debugger`
 const getTopicNameFromFullTopicName = name => name.split('/').pop()
