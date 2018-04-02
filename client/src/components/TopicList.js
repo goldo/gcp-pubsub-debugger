@@ -1,6 +1,7 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { withRouter } from 'react-router';
 import styled from 'styled-components';
 import { TopicItem } from './TopicItem';
 import '../../src/App.css';
@@ -49,6 +50,8 @@ const TOPICS_QUERY = gql`
   }
 `;
 
-export default graphql(TOPICS_QUERY, {
+const GetTopics = graphql(TOPICS_QUERY, {
   name: 'topicsQuery'
 })(TopicList);
+
+export default withRouter(GetTopics);

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const TopicItemSubject = styled.li`
@@ -14,6 +15,12 @@ const TopicItemSubject = styled.li`
   border: 2px solid #ffffff;
 `;
 
+let linkStyle = {
+  textDecoration: 'none'
+};
+
 export const TopicItem = ({ index, name }) => (
-  <TopicItemSubject index={index}>{name}</TopicItemSubject>
+  <Link to={`/topic/${name}`} style={linkStyle}>
+    <TopicItemSubject index={index}>{name}</TopicItemSubject>
+  </Link>
 );
