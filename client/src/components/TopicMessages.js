@@ -1,22 +1,22 @@
-import React from 'react';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
-import { withRouter } from 'react-router';
-import styled from 'styled-components';
-import JSONPretty from 'react-json-pretty';
+import React from 'react'
+import { Query } from 'react-apollo'
+import gql from 'graphql-tag'
+import { withRouter } from 'react-router'
+import styled from 'styled-components'
+import JSONPretty from 'react-json-pretty'
 
 const TopicName = styled.h1`
   color: #00a7e1;
   font-size: 1.5em;
   padding-bottom: 30px;
-`;
+`
 
 const Detail = styled.div`
   text-align: left;
   border-radius: 5px;
   text-align: left;
   font-size: 14px;
-`;
+`
 
 const MessageTable = styled.div`
   display: grid;
@@ -24,27 +24,28 @@ const MessageTable = styled.div`
   grid-template-columns: 200px 1fr 5fr;
   padding: 10px 20px;
   border-bottom: 2px solid #efefef;
-`;
+`
 
 const WhiteSpacePreWrap = styled.div`
   *:first-child {
     white-space: pre-wrap;
   }
-`;
+`
 
 const Title = styled.div`
   font-size: 20px;
   font-weight: Title;
-`;
+`
 
 class TopicMessages extends React.Component {
   render() {
-    const { match } = this.props;
+    const { match } = this.props
     return (
       <div>
         <TopicName>{match.params.name}</TopicName>
         <Query
           query={MESSAGE_QUERY}
+          fetchPolicy="cache-and-network"
           variables={{ topicName: match.params.name }}
         >
           {({ subscribeToMore, data: { messages = [] } = {}, ...result }) => (
@@ -56,12 +57,12 @@ class TopicMessages extends React.Component {
                   document: MESSAGE_SUBSCRIPTION,
                   variables: { topicName: match.params.name },
                   updateQuery: (prev, { subscriptionData }) => {
-                    if (!subscriptionData.data) return prev;
-                    const newMessage = subscriptionData.data.message;
+                    if (!subscriptionData.data) return prev
+                    const newMessage = subscriptionData.data.message
 
                     return Object.assign({}, prev, {
                       messages: [newMessage, ...prev.messages]
-                    });
+                    })
                   }
                 })
               }
@@ -69,16 +70,16 @@ class TopicMessages extends React.Component {
           )}
         </Query>
       </div>
-    );
+    )
   }
 }
 
 class MessageList extends React.Component {
   componentDidMount() {
-    this.props.subscribeToNewMessages();
+    this.props.subscribeToNewMessages()
   }
   render() {
-    const { messages } = this.props;
+    const { messages } = this.props
     return (
       messages &&
       (!!messages.length ? (
@@ -114,7 +115,7 @@ class MessageList extends React.Component {
       ) : (
         <p>No message received</p>
       ))
-    );
+    )
   }
 }
 
@@ -125,7 +126,7 @@ const MessageFragment = gql`
     attributes
     publishTime
   }
-`;
+`
 
 const MESSAGE_QUERY = gql`
   query MessageQuery($topicName: String!) {
@@ -134,7 +135,7 @@ const MESSAGE_QUERY = gql`
     }
   }
   ${MessageFragment}
-`;
+`
 
 const MESSAGE_SUBSCRIPTION = gql`
   subscription newMessage($topicName: String!) {
@@ -143,6 +144,6 @@ const MESSAGE_SUBSCRIPTION = gql`
     }
   }
   ${MessageFragment}
-`;
+`
 
-export default withRouter(TopicMessages);
+export default withRouter(TopicMessages)
