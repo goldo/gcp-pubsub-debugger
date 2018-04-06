@@ -52,7 +52,10 @@ const TOPICS_QUERY = gql`
 `
 
 const GetTopics = graphql(TOPICS_QUERY, {
-  name: 'topicsQuery'
+  name: 'topicsQuery',
+  options: () => ({
+    fetchPolicy: 'cache-and-network'
+  })
 })(TopicList)
 
 export default withRouter(GetTopics)
