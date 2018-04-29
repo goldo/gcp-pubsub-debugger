@@ -1,3 +1,5 @@
+![gcp-pubsub-debugger](https://user-images.githubusercontent.com/518930/39407995-a7dd203c-4bcf-11e8-9b3b-8e2fc801f2d7.gif)
+
 # Install
 
 Install the dependencies:
