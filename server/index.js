@@ -31,19 +31,21 @@ const resolvers = {
 }
 
 const server = new GraphQLServer({
-  typeDefs: './schema.graphql',
+  typeDefs: './server/schema.graphql',
   resolvers
 })
 
+const port = process.env.REACT_APP_SERVER_PORT
+
 server
-  .start()
+  .start({ port })
   .then(() => {
     console.log('subscribing to all topics..')
     return getOrCreateAllSubscriptions()
   })
   .then(() =>
     console.log(
-      '\n== Server GraphQL Playground is running on http://localhost:4000 ==\n'
+      `\n== Server GraphQL Playground is running on http://localhost:${port} ==\n`
     )
   )
   .catch(console.error)

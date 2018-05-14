@@ -7,12 +7,12 @@ import { getMainDefinition } from 'apollo-utilities';
 
 // Create an http link:
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4000'
+  uri: `http://localhost:${process.env.REACT_APP_SERVER_PORT}`
 });
 
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:4000/`,
+  uri: `ws://localhost:${process.env.REACT_APP_SERVER_PORT}/`,
   options: {
     reconnect: true
   }

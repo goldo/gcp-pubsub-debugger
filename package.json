@@ -7,10 +7,12 @@
   },
   "main": "index.js",
   "scripts": {
-    "setup": "yarn install && cd client && yarn install",
-    "start-server": "node index",
-    "start-client": "cd client && yarn start",
-    "start": "npm-run-all --parallel start-server start-client",
+    "start:server": "node server/index",
+    "start:client": "FORCE_COLOR=true react-scripts start | cat",
+    "build:client": "react-scripts build",
+    "test:client": "react-scripts test client --env=jsdom",
+    "eject:client": "react-scripts eject",
+    "start": "npm-run-all --parallel start:server start:client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Franck Achkouyan <https://twitter.com/a_franck>",
@@ -18,14 +20,31 @@
   "devDependencies": {
     "eslint": "4.19.1",
     "eslint-config-prettier": "2.9.0",
-    "eslint-plugin-node": "6.0.1"
+    "eslint-plugin-node": "6.0.1",
+    "eslint-plugin-react": "^7.8.2"
   },
   "dependencies": {
     "@google-cloud/pubsub": "0.18.0",
+    "apollo-cache-inmemory": "1.1.12",
+    "apollo-client": "2.2.8",
+    "apollo-link": "1.2.1",
+    "apollo-link-error": "1.0.7",
+    "apollo-link-http": "1.5.3",
+    "apollo-link-ws": "1.0.7",
     "async": "2.6.0",
-    "dotenv": "5.0.1",
+    "dotenv": "^5.0.1",
+    "graphql": "0.13.2",
+    "graphql-tag": "2.8.0",
     "graphql-type-json": "0.2.0",
     "graphql-yoga": "1.7.0",
+    "react": "16.3.0",
+    "react-apollo": "2.1.1",
+    "react-dom": "16.3.0",
+    "react-json-pretty": "1.7.5",
+    "react-router": "4.2.0",
+    "react-router-dom": "4.2.2",
+    "react-scripts": "1.1.1",
+    "styled-components": "3.2.5",
     "yarn-run-all": "3.1.1"
   }
 }

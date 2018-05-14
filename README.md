@@ -4,9 +4,7 @@
 
 Install the dependencies:
 
-`yarn setup`
-
-(it will `yarn install` both server & client)
+`yarn`
 
 copy the `.env.sample` file into your own `.env`:
 
