@@ -5,6 +5,7 @@ import { Header } from './components/Header'
 import TopicList from './components/TopicList'
 import TopicMessages from './components/TopicMessages'
 import './App.css'
+
 class App extends Component {
   render() {
     return (

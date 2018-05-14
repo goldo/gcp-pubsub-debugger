@@ -1,17 +1,26 @@
 module.exports = {
-  plugins: ['node'],
   extends: [
-    'prettier',
-    'prettier/standard',
     'eslint:recommended',
-    'plugin:node/recommended'
+    'standard',
+    'plugin:react/recommended',
+    'prettier',
+    'prettier/react',
+    'prettier/standard'
   ],
-  rules: {
-    'node/exports-style': ['error', 'module.exports'],
-    'no-console': 'off'
-  },
-  env: { es6: true },
+  plugins: [
+    'react', 'prettier', 'standard'
+  ],
   parserOptions: {
-    ecmaVersion: 2018
+    'sourceType': 'module',
+    'ecmaFeatures': {
+      'jsx': true
+    }
+  },
+  env: {
+    'es6': true,
+    'node': true
+  },
+  rules: {
+    'prettier/prettier': 'error'
   }
-};
+}
