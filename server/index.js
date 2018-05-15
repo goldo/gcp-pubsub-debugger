@@ -5,7 +5,7 @@ const graphqlPubSub = require('./graphql-pubsub')
 const {
   getTopics,
   getMessages,
-  getOrCreateAllSubscriptions
+  getOrCreateAllSubscriptions,
 } = require('./resolvers')
 
 const GraphQLJSON = require('graphql-type-json')
@@ -17,22 +17,22 @@ if (dotEnvLoading.error) {
 const resolvers = {
   Query: {
     topics: getTopics,
-    messages: (_, { topicName }) => getMessages(topicName)
+    messages: (_, { topicName }) => getMessages(topicName),
   },
   Subscription: {
     message: {
       subscribe: withFilter(
         () => graphqlPubSub.asyncIterator('message'),
         ({ message }, { topicName }) => message.topic.name === topicName
-      )
-    }
+      ),
+    },
   },
-  JSON: GraphQLJSON
+  JSON: GraphQLJSON,
 }
 
 const server = new GraphQLServer({
   typeDefs: './server/schema.graphql',
-  resolvers
+  resolvers,
 })
 
 const port = process.env.REACT_APP_SERVER_PORT
