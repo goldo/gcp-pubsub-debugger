@@ -5,8 +5,8 @@ const pubsub = new PubSub({
   apiEndpoint: process.env.GCP_API_ENDPOINT,
   credentials: {
     private_key: process.env.GCP_PRIVATE_KEY,
-    client_email: process.env.GCP_CLIENT_EMAIL
-  }
+    client_email: process.env.GCP_CLIENT_EMAIL,
+  },
 })
 
 module.exports = pubsub
